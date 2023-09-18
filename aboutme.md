@@ -1,12 +1,12 @@
 ---
 layout: page
 title: About me
-subtitle: in LA
+subtitle: 📍Los Angeles
 ---
 
-I'm JC. 
+Hello,
 
-- 1
-- 2
+My name is Junxi Chen. 
 
-HAHAHA
+I received my Bachelor's degree in **Mathematics** and **Computational Neuroscience** with a minor in **Computer Science** from **USC**.
+
