@@ -190,14 +190,6 @@ Then install hexo-renderer-pandoc,
 > npm uninstall hexo-renderer-marked --save
 > npm install hexo-renderer-pandoc --save
 
-After that, as usual, do
-
-> hexo clean
->
-> hexo deploy
-
-and you're good to go.
-
 <br>
 
 ---
