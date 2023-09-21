@@ -179,7 +179,7 @@ So now you know, when the people who claim to be expert in watermelon got you ba
 
 ---
 
-### **Steps to add LaTeX support to your hexo blog:**
+### **Steps to add LaTeX support to your Jekyll blog:**
 
 First download Pandoc,
 
@@ -194,26 +194,17 @@ After that, as usual, do
 
 > hexo clean
 >
-> hexo generate
->
 > hexo deploy
 
 and you're good to go.
 
 <br>
 
-Reference | https://zhuanlan.zhihu.com/p/35988761
-
 ---
 
-吐槽：
 
-刚听到这个名字的时候笑出了声，因为翻译成中文大概是”我估摸着这大概差不多是对的吧“这种感觉。
-
-鲁迅曾经写过，”大约孔乙己的确死了“，或有异曲同工之妙。
 
 ---
 
 *Shai Shalev-Shwartz and Shai Ben-David. 2014.* *Understanding Machine Learning: From Theory to Algorithms*. *Cambridge University Press, USA.*
 
-Cover by [飴村](https://www.pixiv.net/member.php?id=47488) on Pixiv
