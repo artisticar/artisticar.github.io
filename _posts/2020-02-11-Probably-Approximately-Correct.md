@@ -4,7 +4,8 @@ date: 2020-02-11 22:53:23
 tags:
 - Machine Learning
 - Math
-thumbnail-img: /assets/img/watermelon.png
+thumbnail-img: /assets/img/pac.png
+cover-img: /assets/img/watermelon.jpg
 ---
 
 
@@ -166,7 +167,7 @@ We also want to introduce new definitions for empirical error and true error:
 **New Empirical Error:**
 
 - $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
-- Compared to the original definition of empirical error $L_S(h) =  $ $ \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert }{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
+- Compared to the original definition of empirical error $L_S(h) = $ $\frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
@@ -225,4 +226,9 @@ First time writing in Latex,  so I figured I'd put together this blog to get the
 
 *Shai Shalev-Shwartz and Shai Ben-David. 2014.* *Understanding Machine Learning: From Theory to Algorithms*. *Cambridge University Press, USA.*
 
-Image credit: Tsvi Braverman / EyeEm via Getty Images
+Image credit: 
+
+Tsvi Braverman / EyeEm via Getty Images
+
+[Amit Daniely and Roy Frostig](https://images.app.goo.gl/JcTuXpLLwxcndyXU8)
+
