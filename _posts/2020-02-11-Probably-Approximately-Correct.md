@@ -33,72 +33,72 @@ $L$ : Loss function
 
 **Empirical Risk Minimization(ERM)**:
 
-A principle that is to find a predictor $h$ that minimizes empirical risk $L_S(h)$. 
+The principle behind ERM is to find a predictor $h$ that minimizes empirical the risk $L_S(h)$. 
 
 <br>
 
-When **realizability** assumption holds, that is
+When the **realizability** assumption holds, the following conditions are met
 
 - $\exists h_* \in H$ such that $L_{D,f}(h_*) = 0$
-- This means that it's possible to have a hypothesis that correctly predicts all the labels in the distribution $D$
+- This implies that there exists a hypothesis that correctly predicts all the labels according to the distribution $D$
 
-*Corollary*: $P(L_S(h*) = 0) = 1$, with any $S$ sampled from $D$
+*Corollary*: $P(L_S(h*) = 0) = 1$, for any $S$ sampled from $D$
 
-the predictor $h$ returned by the ERM always has an empirical risk $L_S(h)$ = 0.
+Under this assumption, the predictor $h$ returned by ERM will always have an empirical risk $L_S(h)$ = 0.
 
 <br>
 
-And the examples in the sample are sampled following
+The examples in the samples are sampled following the i.i.d assumption.
 
 **i.i.d. assumption**:
 
 - i.i.d. stands for "independently and identically distributed"
-- **i.e.** all the examples in the sample follow this assumption with respect to the distribution $D$
-- we denote it as $S$ ~ $D^m$
+- **i.e.** all the examples in the sample $S$ are i.i.d. with respect to the distribution $D$
+- we denote this as $S$ ~ $D^m$
 
 <br>
 
-As the i.i.d. assumption holds, It's always possible to get non-representative samples from the distribution. In this case though the ERM achieves zero error on the training set, it doesn't do a good job predicting over the true distribution. Therefore we would give a ***confidence parameter*** of tolerance: 
+Even if the i.i.d. assumption holds, It's still possible to get non-representative samples from the distribution $D$. In such cases,  ERM may achieve zero error on the training set $S$but perform poorly on the actual distribution $D$. To account for this, we introduce a ***confidence parameter*** of tolerance: 
 
-- $\delta$ , which denotes the possibility of getting a bad sample. 
+- $\delta$ , which denotes the probability of getting a bad sample. 
 
-However, even when we get a pretty representative sample, since it's not the whole of the distribution, it's likely that it doesn't capture all of the detail of the distribution. Again we would give an ***accuracy parameter*** of tolerance:
+Similarly, even with a representative sample $S$, the sample may not capture the entire distribution $D$. For this, we introduce an ***accuracy parameter*** of tolerance:
 
-- $\epsilon$ , which denotes the error rate of the hypothesis in the true distribution.
+- $\epsilon$ , which denotes the error rate of the hypothesis in the true distribution $D$.
 
 <br>
 
 ---
 
-We want to upperbound the probability of getting a **misleading hypothesis**. These hypotheses achieve 0 error on the training set but error > $\epsilon$ on the distribution $D$.
+We aim to upper-bound the probability of selecting a **misleading hypothesis**. A misleading hypothesis achieves zero error on the training set $S$ but has an error rate $>$ $\epsilon$ on the distribution $D$.
 
 ### **Proof**
 
-We define $H_B$ as the set of hypothesis that has an error > $\epsilon$ on the distribution.
+We define $H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
 
 - $H_B$ = {$h \in H : L_{(D,f)}(h) > \epsilon$}
 
-Therefore, the probability of getting a misleading hypothesis is 
+Therefore, the probability of getting a misleading hypothesis from the sample $S$ is 
 
-- $D^m$($\cup_{h\in H_B}${$S|_x: L_S(h) = 0$})
+- $D^m$($\cup_{h\in H_B}${$S\vert_x: L_S(h) = 0$})
 
-Apply union bound to it, we get that the probability above is upperbounded by 
+Apply the union bound to this expression, we we find that the above probability is upperbounded by 
 
-- $\sum_{h\in H_B}$ $D^m$({$S|_x: L_S(h) = 0$})
+- $\sum_{h\in H_B}$ $D^m$({$S\vert_x: L_S(h) = 0$})
 
-The error of getting an individual bad hypothesis is
+The probability of obtaining a single bad hypothesis $h$ is:
 
 - $(1 - L_{(D,f)}(h))^m$ $\leq (1 - \epsilon)^m$ $<= e^{-\epsilon m}$
-- $1 - L_{(D,f)}(h)$ is the probability of get an individual misleading example
+- Here, $1 - L_{(D,f)}(h)$ is the probability of get an individual misleading example for $h$
 
-Hence, we substitute the bound we got in the inequality above to the sum to obtain
+Substituting this bound into the sum gives:
 
-- $|H_B|$ $e^{-\epsilon m}$
-- $|H_B|$ is the number of bad hypothesis which isn't known, we again upperbound it by the total number of hypothesis - $|H|$.
+- $\vert H_B\vert$ $e^{-\epsilon m}$
+- Since $\vert H_B\vert$ (the number of bad hypotheses) is not known, we upper-bound it by the total number of hypotheses, $\vert H\vert$.
 
-Putting all the things together, we have an upperbound that is
+Putting all these observations together, we find that the upper-bound is:
 
-- $D^m$($\cup_{h\in H}${$S|_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq |H|$ $e^{-\epsilon m}$
+- $D^m$($\cup_{h\in H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert H\vert$ $e^{-\epsilon m}$
 
 ---
 
@@ -108,12 +108,12 @@ If we want to have at most $\delta $ odds on getting a misleading hypothesis
 
 **i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$)
 
-- $1 - |H|$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which gives the result below
-- $m \geq \frac{log({|H|}/{\delta})}{\epsilon}$
+- $1 - \vert H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which gives the result below
+- $m \geq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$
 
 We define $m_H (\epsilon, delta)$ as **sample complexity**
 
-- $m_H (\epsilon, \delta) \leq \frac{log({|H|}/{\delta})}{\epsilon}$ 
+- $m_H (\epsilon, \delta) \leq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
 
 which denotes the minimum number of examples for any ERM learned from an i.i.d sample to be
 
@@ -131,7 +131,7 @@ Then if given $\forall$ $\epsilon$ and $\delta$ , a learning algorithm(**e.g.** 
 
 *Corollary*: Every finite class hypothesis is PAC learnable with sample complexity
 
-- $m_H (\epsilon, \delta) <= \frac{log({|H|}/{\delta})}{\epsilon}$ 
+- $m_H (\epsilon, \delta) <= \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
 
 This doesn't mean that infinite classes aren't learnable. Some, such as axis-aligned rectangles and concentric circles in the exercises of the book are examples of the learnable ones. 
 
@@ -155,8 +155,8 @@ We also want to define a new empirical error and a new true error:
 
 **New Empirical Error:**
 
-- $L_S(h) = \frac{| \{i | h(x_i) \neq y_i)\}|}{m}$
-- Comparing to the original definition of empirical error $L_S(h) = \frac{| \{i | h(x_i) \neq h_*(i)\}|}{m}$ , we see that the $h_*(i)$ is replaced by $y_i$ because there's no $h_*(i)$ that predicts everything right anymore. 
+- $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
+- Comparing to the original definition of empirical error $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert}{m}$ , we see that the $h_*(i)$ is replaced by $y_i$ because there's no $h_*(i)$ that predicts everything right anymore. 
 
 **New True Error:**
 
@@ -181,20 +181,21 @@ So now you know, when the people who claim to be expert in watermelon got you ba
 
 ### **Steps to add LaTeX support to your Jekyll blog:**
 
-First download Pandoc,
+Add the following code in the file **_includes/head.html**
 
-> brew install Pandoc
+> <script type="text/x-mathjax-config">
+>     MathJax.Hub.Config({
+>       tex2jax: {
+>         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+>         inlineMath: [['$','$']]
+>       }
+>     });
+>   </script>
+>   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
 
-Then install hexo-renderer-pandoc,
-
-> npm uninstall hexo-renderer-marked --save
-> npm install hexo-renderer-pandoc --save
+Reference | https://stackoverflow.com/questions/26275645/how-to-support-latex-in-github-pages
 
 <br>
-
----
-
-
 
 ---
 
