@@ -11,8 +11,6 @@ thumbnail: /gallery/kq.jpg
 
 # **Probably Approximately Correct**
 
----
-
 Notations:
 
 $H$ : Class of hypothesis
@@ -27,13 +25,11 @@ $m$ : Sample size
 
 $L$ : Loss function
 
-<br>
-
 ---
 
 **Empirical Risk Minimization(ERM)**:
 
-The principle behind ERM is to find a predictor $h$ that minimizes empirical the risk $L_S(h)$. 
+The principle behind ERM is to find a predictor $h$ that minimizes empirical the risk $L_S(h)$
 
 <br>
 
@@ -48,7 +44,7 @@ Under this assumption, the predictor $h$ returned by ERM will always have an emp
 
 <br>
 
-The examples in the samples are sampled following the i.i.d assumption.
+Assuming the sample $S$ is sampled from the distribution $D$ following the i.i.d assumption.
 
 **i.i.d. assumption**:
 
@@ -69,6 +65,8 @@ Similarly, even with a representative sample $S$, the sample may not capture the
 <br>
 
 ---
+
+<br>
 
 We aim to upper-bound the probability of selecting a **misleading hypothesis**. A misleading hypothesis achieves zero error on the training set $S$ but has an error rate $>$ $\epsilon$ on the distribution $D$.
 
@@ -100,102 +98,118 @@ Putting all these observations together, we find that the upper-bound is:
 
 - $D^m$($\cup_{h\in H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert H\vert$ $e^{-\epsilon m}$
 
+<br>
+
 ---
 
-In the case that $H$ is finite, we can apply a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
+<br>
 
-If we want to have at most $\delta $ odds on getting a misleading hypothesis
+In cases where $H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
 
-**i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$)
+If we aim to have at most $\delta $ odds of obtaining a misleading hypothesis — **i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$), we have
 
-- $1 - \vert H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which gives the result below
+- $1 - \vert H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which simplifies to
 - $m \geq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$
 
 We define $m_H (\epsilon, delta)$ as **sample complexity**
 
 - $m_H (\epsilon, \delta) \leq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
 
-which denotes the minimum number of examples for any ERM learned from an i.i.d sample to be
+This represents the minimum number of examples required for any ERM learned from an i.i.d sample to be:
 
-- **probably**(with confidence $> 1 - \delta$) **approximately** ($L_{D,f}(h) < \epsilon$) **correct**.
+- **Probably**(with confidence $> 1 - \delta$) 
+- **Approximately** ($L_{D,f}(h) < \epsilon$) 
+- **Correct**
 
-This is where **PAC** comes from.
+This is the origin of the term **PAC**.
+
+<br>
 
 ---
 
-Assume that the realizability assumption holds for $H, D, f$
+<br>
 
-and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$.
+Suppose the realizability assumption holds for $H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$.
 
-Then if given $\forall$ $\epsilon$ and $\delta$ , a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that it is PAC learnable. 
+Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $H$ is PAC learnable. 
 
 *Corollary*: Every finite class hypothesis is PAC learnable with sample complexity
 
 - $m_H (\epsilon, \delta) <= \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
 
-This doesn't mean that infinite classes aren't learnable. Some, such as axis-aligned rectangles and concentric circles in the exercises of the book are examples of the learnable ones. 
+It's important to note that this doesn't imply infinite hypothesis classes are unlearnable.  Some infinite classes, such as axis-aligned rectangles and concentric circles(often cited in learning theory exercises), are examples of PAC-learnable classes. 
 
 ---
 
 ## **Agnostic PAC learnable**
 
-Some people claim that they know how to see if a watermelon is tasty or not really well. Let's say they evaluate, or, make the prediction based on the following two features - weight and diameter. Though in reality it's impossible to have two identical watermelons, it's theoretically possible that some watermelons have the same numerical value of the two features, yet turn out that one is tasty while the other is not. Think about it in real life. Two watermelons can look really similar but taste very differently. 
+You know how some people claim they can determine if a watermelon is tasty based on its weight and diameter? While it's highly unlikely to find two identical watermelons, theoretically, you could have watermelons with the same weight and diameter that taste entirely different.
 
-I guess this is not a perfect example because tastiness is subjective, but let's assume that there's a universal standard of measuring tastiness. In that case, if we know everything about the watermelon, everything about every single piece of physical matter it is composed of, then I guess there exist a hypothesis that can generate perfect prediction anytime. However, this is obviously impossible, and the features given to us are usually **not deterministic**.
+I guess this is not a perfect example because of the subjectivity of 'tastiness'', but let's assume that there's a universal standard for it. In that case, if we know everything about the watermelon, everything about every single piece of physical matter it is composed of, then I guess there exist a hypothesis that can generate perfect prediction anytime. But let's be realistic; this is virtually impossible because the features we have are usually **not deterministic**.
 
-Then there's no hypothesis that can give a correct definite answer. All the hypotheses can do is to give a **distribution** given the input features. 
+In such scenarios, no single hypothesis can provide a definitive correct answer. The best we can hope for is a hypothesis that gives a **probability distribution** based on those features.
 
-For example, given that the watermelon weigh 12 kilos and have a diameter of 30 centimeters, the best possible prediction is to say that it has a 70% chance of being tasty and 30% chance that it tastes bad. This predictor is based on the labels on the distribution, and we can't do better than that. We call this predictor **The Bayes Optimal Predictor**.
+For example, given that the watermelon weigh 12 kilos and have a diameter of 30 centimeters, most accurate prediction might be that there's a 70% chance it's tasty and a 30% chance it's not. This isn't just a random guess; it's based on observed data and what we call the **Bayes Optimal Predictor**.
 
-We can clearly see that the realizability assumption doesn't hold here, because
+It's clear that the realizability assumption doesn't hold here, because
 
 - $min_{h\in H} L_D(h)$ > 0
 
-We also want to define a new empirical error and a new true error:
+We also want to introduce new definitions for empirical error and true error:
 
 **New Empirical Error:**
 
 - $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
-- Comparing to the original definition of empirical error $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert}{m}$ , we see that the $h_*(i)$ is replaced by $y_i$ because there's no $h_*(i)$ that predicts everything right anymore. 
+- Compared to the original definition of empirical error $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert}{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
 - $L_D(h) = P_{(x,y)\sim D} [h(x) \neq y]$
-- Notice that $y$ , which is the label, is also drawn from the distribution, which is probablistic. 
+- Notice that the label $y$ is also drawn from the distribution, making it probablistic. 
 
 <br>
 
-In this more general case of prediction task, we want to define **Agnostic PAC Learnability**:
+In this broader context of prediction tasks, we introduce the concept of **Agnostic PAC Learnability**:
 
-The definition is exactly the same as PAC learnability, except that we introduce an extra term  $min_{h\in H}L_D(h)$ into the inequality of PAC.
+The definition mirrors that of standard PAC learnability but adds an extra term  $min_{h\in H}L_D(h)$ into the inequality of PAC.
 
 - $P(L_{D,f}(h) -min_{h\in H} L_D(h) \leq \epsilon)$ $\geq 1-\delta$
-- The only difference is the $min_{h\in H}L_D(h)$ term
-- Our goal now is to get close to the accuracy of the Bayes Optimal Predictor but not 0 error rate which is unrealistic
+- The only addition is the $min_{h\in H}L_D(h)$ term
+- Our objective now shifts to getting as close as possible to the accuracy of the Bayes Optimal Predictor, rather than aiming for an unrealistic 0% error rate.
 
 <br>
 
-So now you know, when the people who claim to be expert in watermelon got you bad watermelons from the grocery store, it may not be because of they're lying. In fact they might be making the optimal decision but just happened to be unlucky. 
+So, the next time someone who claims to be a watermelon expert picks out a dud for you at Trader Joe's, it might not be because they're fibbing. They could very well be making the most informed choice possible but just got unlucky this time around. 
+
+<br>
 
 ---
+
+<br>
 
 ### **Steps to add LaTeX support to your Jekyll blog:**
 
 Add the following code in the file **_includes/head.html**
 
-> <script type="text/x-mathjax-config">
->     MathJax.Hub.Config({
->       tex2jax: {
->         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
->         inlineMath: [['$','$']]
->       }
->     });
->   </script>
->   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+```html
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        inlineMath: [['$','$']]
+      }
+    });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+```
 
-Reference | https://stackoverflow.com/questions/26275645/how-to-support-latex-in-github-pages
+Reference $\vert$ https://stackoverflow.com/questions/26275645/how-to-support-latex-in-github-pages
 
 <br>
+
+**Side notes**
+
+First time writing in Latex,  so I figured I'd put together this blog to get the hang of it.
 
 ---
 
