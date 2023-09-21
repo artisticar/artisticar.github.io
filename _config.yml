@@ -22,8 +22,8 @@ author: Junxi Chen
 navbar-links:
   About Me: "aboutme"
   Blogs:
-    - Math/CS: "aboutme"
-    - Neuroscience: "aboutme"
+    - Math/CS: "https://artisticar.github.io/tags/#Math"
+    - The Study of Mind: "https://artisticar.github.io/tags/#Mind"
     - 中文: "chinese"
   Resources:
     - Encyclopedia of Comp Neuro: "http://www.scholarpedia.org/article/Encyclopedia_of_computational_neuroscience"

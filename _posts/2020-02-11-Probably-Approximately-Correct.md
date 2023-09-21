@@ -166,7 +166,7 @@ We also want to introduce new definitions for empirical error and true error:
 **New Empirical Error:**
 
 - $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
-- Compared to the original definition of empirical error $L_S(h) =  $$ \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert }{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
+- Compared to the original definition of empirical error $L_S(h) =  $ $ \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert }{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
@@ -217,7 +217,12 @@ Reference $\vert$ https://stackoverflow.com/questions/26275645/how-to-support-la
 
 First time writing in Latex,  so I figured I'd put together this blog to get the hang of it.
 
+<br>
+
 ---
+
+<br>
 
 *Shai Shalev-Shwartz and Shai Ben-David. 2014.* *Understanding Machine Learning: From Theory to Algorithms*. *Cambridge University Press, USA.*
 
+Image credit: Tsvi Braverman / EyeEm via Getty Images
