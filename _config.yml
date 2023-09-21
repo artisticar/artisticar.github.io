@@ -21,7 +21,7 @@ author: Junxi Chen
 
 navbar-links:
   About Me: "aboutme"
-  Blogs:
+  Blog:
     - Math/CS: "https://artisticar.github.io/tags/#Math"
     - The Study of Mind: "https://artisticar.github.io/tags/#Mind"
     - 中文: "chinese"

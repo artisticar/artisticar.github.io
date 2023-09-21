@@ -173,7 +173,7 @@ We also want to introduce new definitions for empirical error and true error:
 
   $L_S(h) = $ $\frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $
 
-  we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
+  we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
