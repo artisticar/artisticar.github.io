@@ -4,7 +4,7 @@ date: 2020-02-11 22:53:23
 tags:
 - Machine Learning
 - Math
-thumbnail: /gallery/kq.jpg
+thumbnail-img: /assets/img/watermelon.png
 ---
 
 
@@ -26,6 +26,8 @@ $m$ : Sample size
 $L$ : Loss function
 
 ---
+
+<br>
 
 **Empirical Risk Minimization(ERM)**:
 
@@ -139,7 +141,11 @@ Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) 
 
 It's important to note that this doesn't imply infinite hypothesis classes are unlearnable.  Some infinite classes, such as axis-aligned rectangles and concentric circles(often cited in learning theory exercises), are examples of PAC-learnable classes. 
 
+<br>
+
 ---
+
+<br>
 
 ## **Agnostic PAC learnable**
 
@@ -160,7 +166,7 @@ We also want to introduce new definitions for empirical error and true error:
 **New Empirical Error:**
 
 - $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
-- Compared to the original definition of empirical error $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert}{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
+- Compared to the original definition of empirical error $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\vert }{m}$ , we see that the $h_*(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
