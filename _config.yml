@@ -23,7 +23,7 @@ navbar-links:
   About Me: "aboutme"
   Blog:
     - Math/CS: "https://artisticar.github.io/tags/#Math"
-    - The Study of Mind: "https://artisticar.github.io/tags/#Mind"
+    - The Study of Mind: "https://artisticar.github.io/tags/#Neuroscience"
     - 中文: "chinese"
   Resources:
     - Encyclopedia of Comp Neuro: "http://www.scholarpedia.org/article/Encyclopedia_of_computational_neuroscience"
@@ -39,7 +39,7 @@ navbar-links:
 
 # Image to show in the navigation bar - works best with a square image
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/assets/img/me1.png"
+avatar: "/assets/img/me2.png"
 
 # By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
 round-avatar: true
