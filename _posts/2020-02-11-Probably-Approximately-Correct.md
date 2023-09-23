@@ -1,5 +1,5 @@
 ---
-title: PAC in a nutshell
+title: PAC Learnability in a nutshell
 date: 2020-02-11 22:53:23
 tags:
 - Machine Learning
