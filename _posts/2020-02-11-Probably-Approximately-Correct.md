@@ -19,31 +19,7 @@ In the field of machine learning, several fundamental questions frequently come 
 - How do we define and measure learnability?
 - How to evaluate the generalization capabilities of algorithms?
 
-The PAC (Probably Approximately Correct) learning emerges as a framework that provides us a rigorous language and methodology to delve into these questions. In this article, we'll look at how PAC learning is formally defined.
-
-<br>
-
----
-
-Notations:
-
-$\mathcal H$ : Class of hypothesis
-
-$D$ : Distribution
-
-$f$ : Labeling function of $D$ 
-
-$S$ : Sample
-
-$m$ : Sample size
-
-$L$ : Loss function
-
-$\mathcal X$ : Instances domain
-
-$\mathcal Y$ : Labels domain
-
----
+The **PAC (Probably Approximately Correct) Learning** emerges as a framework that provides us a rigorous language and methodology to delve into these questions. In this article, we'll look at how PAC learning is formally defined.
 
 <br>
 
@@ -57,9 +33,7 @@ Given a training set $S$ sampled from an unknown distribution $D$, a learning al
 
 The principle behind ERM is to find a predictor $h$ that minimizes one type of error: the empirical risk (training error) $L_S(h)$, defined as
 
-- $L_S(h)$ $=$ $\dfrac{\vert\{\exists i \in [m]\}:h(x_i)\neq y_i\vert}{m} $
-
-$[m] = \{1, ..., m\}$
+- $L_S(h)$ $=$ $\dfrac{\vert\{\exists i \in [m]\}:h(x_i)\neq y_i\vert}{m} $, where $[m] = \{$ $1, ..., m$ $\}$
 
 Before learning, one often has an idea on what type of function the predictor should be, so we would apply ERM on this predetermined hypothesis class $\mathcal H$. Given a sample $S$, the output is formally defined as
 
@@ -69,12 +43,11 @@ $ERM_\mathcal H(S) \in \underset{h\in \mathcal H}{argmin}~L_s(h)$
 
 In the first part of this article, we assume the following assumption holds to make the problem easier. 
 
- **The Realizability Assumption**:
+**DEFINITION 1. (The Realizability Assumption)**	$\exists h_* \in \mathcal H$ such that $L_{D,f}(h_*) = 0$
 
-- $\exists h_* \in \mathcal H$ such that $L_{D,f}(h_*) = 0$
 - This implies that there exists a hypothesis that correctly predicts all the labels according to the distribution $D$
 
-*Corollary*: $P(L_S(h*) = 0) = 1$, for any $S$ sampled from $D$
+***Corollary*** **:** $P(L_S(h*) = 0) = 1$, for any $S$ sampled from $D$
 
 Under this assumption, the predictor $h$ returned by ERM will always have an empirical risk $L_S(h)$ = 0.
 
@@ -88,8 +61,6 @@ Since we only have access to $S$, we often further assume that the sample $S$ is
 - **i.e.** all the examples in the sample $S$ are i.i.d. with respect to the distribution $D$
 - we denote this as $S$ ~ $D^m$
 
-<br>
-
 Even if the i.i.d. assumption holds, It's still possible to get non-representative samples from the distribution $D$. In such cases,  ERM may achieve zero error on the training set $S$but perform poorly on the actual distribution $D$. To account for this, we introduce a ***confidence parameter*** of tolerance: 
 
 - $\delta$ , which denotes the probability of getting a bad sample. 
@@ -98,27 +69,19 @@ Similarly, even with a representative sample $S$, the sample may not capture the
 
 - $\epsilon$ , which denotes the error rate of the hypothesis in the true distribution $D$.
 
-<br>
-
----
-
-<br>
+#### **Upper bound on $P(ERM_\mathcal H(S) \in \mathcal H_B)$**
 
 We aim to upper-bound the probability of selecting a **misleading hypothesis**. A misleading hypothesis achieves zero error on the training set $S$ but has an error rate $>$ $\epsilon$ on the distribution $D$.
 
-### **Proof**
-
 We define $\mathcal H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
 
-- $H_B$ = {$h \in \mathcal  : L_{(D,f)}(h) > \epsilon$}
+- $\mathcal H_B$ = {$h \in \mathcal  : L_{(D,f)}(h) > \epsilon$} $ \subseteq \mathcal H$
 
 Therefore, the probability of getting a misleading hypothesis from the sample $S$ is 
 
-- $D^m$($\cup_{h\in \mathcal H_B}${$S\vert_x: L_S(h) = 0$})
+- $D^m$($\cup_{h\in \mathcal H_B}${$S\vert_x: L_S(h) = 0$}) $\leq$ $ \sum_{h\in \mathcal H_B}$ $D^m$({$S\vert_x: L_S(h) = 0$})
 
-Apply the union bound to this expression, we we find that the above probability is upperbounded by 
-
-- $\sum_{h\in \mathcal H_B}$ $D^m$({$S\vert_x: L_S(h) = 0$})
+The above inequality is obtained by applying the union bound to the left hand side of this expression.
 
 The probability of obtaining a single bad hypothesis $h$ is:
 
@@ -127,18 +90,13 @@ The probability of obtaining a single bad hypothesis $h$ is:
 
 Substituting this bound into the sum gives:
 
-- $\vert \mathcal H_B\vert$ $e^{-\epsilon m}$
-- Since $\vert \mathcal H_B\vert$ (the number of bad hypotheses) is not known, we upper-bound it by the total number of hypotheses, $\vert \mathcal H\vert$.
+- $\vert \mathcal H_B\vert$ $e^{-\epsilon m}$ $\leq$ $\vert \mathcal H\vert$ $e^{-\epsilon m}$
 
 Putting all these observations together, we find that the upper-bound is:
 
 - $D^m$($\cup_{h\in \mathcal H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert \mathcal H\vert$ $e^{-\epsilon m}$
 
-<br>
-
----
-
-<br>
+#### **Lower bound on sample complexity**
 
 In cases where $\mathcal H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
 
@@ -159,17 +117,11 @@ This represents the minimum number of examples required for any ERM learned from
 
 This is the origin of the term **PAC**.
 
-<br>
+#### **PAC Learning**
 
----
+**DEFINITION 2. (PAC Learnability)**	Suppose the realizability assumption holds for $\mathcal H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$. Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $\mathcal H$ is **PAC learnable**. 
 
-<br>
-
-Suppose the realizability assumption holds for $\mathcal H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$.
-
-Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $\mathcal H$ is PAC learnable. 
-
-*Corollary*: Every finite class hypothesis is PAC learnable with sample complexity
+***Corollary*** **:** Every finite class hypothesis is PAC learnable with sample complexity
 
 - $m_H (\epsilon, \delta) <= \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$ 
 
@@ -212,8 +164,6 @@ We also want to introduce new definitions for empirical error and true error:
 - $L_D(h) = P_{(x,y)\sim D} [h(x) \neq y]$
 - Notice that the label $y$ is also drawn from the distribution, making it probablistic. 
 
-<br>
-
 In this broader context of prediction tasks, we introduce the concept of **Agnostic PAC Learnability**:
 
 The definition mirrors that of standard PAC learnability but adds an extra term  $min_{h\in H}L_D(h)$ into the inequality of PAC.
@@ -222,11 +172,29 @@ The definition mirrors that of standard PAC learnability but adds an extra term 
 - The only addition is the $min_{h\in H}L_D(h)$ term
 - Our objective now shifts to getting as close as possible to the accuracy of the Bayes Optimal Predictor, rather than aiming for an unrealistic 0% error rate.
 
-<br>
-
 So, the next time someone who claims to be a watermelon expert picks out a dud for you at Trader Joe's, it might not be because they're fibbing. They could very well be making the most informed choice possible but just got unlucky this time around. 
 
 <br>
+
+---
+
+Notations:
+
+$\mathcal H$ : Class of hypothesis
+
+$D$ : Distribution
+
+$f$ : Labeling function of $D$ 
+
+$S$ : Sample
+
+$m$ : Sample size
+
+$L$ : Loss function
+
+$\mathcal X$ : Instances domain
+
+$\mathcal Y$ : Labels domain
 
 ---
 
