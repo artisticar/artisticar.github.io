@@ -21,8 +21,6 @@ In the field of machine learning, several fundamental questions frequently come 
 
 The **PAC (Probably Approximately Correct) Learning** emerges as a framework that provides us a rigorous language and methodology to delve into these questions. In this article, we'll look at how PAC learning is formally defined.
 
-<br>
-
 Let's first start from a simple learning paradigm,
 
 **Empirical Risk Minimization(ERM)**:
@@ -39,11 +37,9 @@ Before learning, one often has an idea on what type of function the predictor sh
 
 $ERM_\mathcal H(S) \in \underset{h\in \mathcal H}{argmin}~L_s(h)$
 
-<br>
-
 In the first part of this article, we assume the following assumption holds to make the problem easier. 
 
-**DEFINITION 1. (The Realizability Assumption)**	$\exists h_* \in \mathcal H$ such that $L_{D,f}(h_*) = 0$
+**DEFINITION 1. (The Realizability Assumption)**        $\exists h_* \in \mathcal H$ such that $L_{D,f}(h_*) = 0$
 
 - This implies that there exists a hypothesis that correctly predicts all the labels according to the distribution $D$
 
@@ -69,11 +65,11 @@ Similarly, even with a representative sample $S$, the sample may not capture the
 
 - $\epsilon$ , which denotes the error rate of the hypothesis in the true distribution $D$.
 
-#### **Upper bound on $P(ERM_\mathcal H(S) \in \mathcal H_B)$**
+<br>
 
-We aim to upper-bound the probability of selecting a **misleading hypothesis**. A misleading hypothesis achieves zero error on the training set $S$ but has an error rate $>$ $\epsilon$ on the distribution $D$.
+### **Upper bound on $P(ERM_\mathcal H(S) \in \mathcal H_B)$**
 
-We define $\mathcal H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
+We aim to upper-bound the probability of selecting a **misleading hypothesis**. A misleading hypothesis achieves zero error on the training set $S$ but has an error rate $>$ $\epsilon$ on the distribution $D$. We define $\mathcal H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
 
 - $\mathcal H_B$ = {$h \in \mathcal  : L_{(D,f)}(h) > \epsilon$} $ \subseteq \mathcal H$
 
@@ -96,11 +92,9 @@ Putting all these observations together, we find that the upper-bound is:
 
 - $D^m$($\cup_{h\in \mathcal H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert \mathcal H\vert$ $e^{-\epsilon m}$
 
-#### **Lower bound on sample complexity**
+### **Lower bound on sample complexity**
 
-In cases where $\mathcal H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
-
-If we aim to have at most $\delta $ odds of obtaining a misleading hypothesis — **i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$), we have
+In cases where $\mathcal H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. If we aim to have at most $\delta $ odds of obtaining a misleading hypothesis — **i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$), we have
 
 - $1 - \vert \mathcal H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which simplifies to
 - $m \geq \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$
@@ -117,9 +111,9 @@ This represents the minimum number of examples required for any ERM learned from
 
 This is the origin of the term **PAC**.
 
-#### **PAC Learning**
+### **PAC Learning**
 
-**DEFINITION 2. (PAC Learnability)**	Suppose the realizability assumption holds for $\mathcal H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$. Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $\mathcal H$ is **PAC learnable**. 
+**DEFINITION 2. (PAC Learnability)**        Suppose the realizability assumption holds for $\mathcal H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$. Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $\mathcal H$ is **PAC learnable**. 
 
 ***Corollary*** **:** Every finite class hypothesis is PAC learnable with sample complexity
 
@@ -153,11 +147,8 @@ We also want to introduce new definitions for empirical error and true error:
 
 - $L_S(h) = \dfrac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
 
-- Compared to the original definition of empirical error 
+- Compared to the original definition of empirical error $L_S(h) = $ $\dfrac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $ , we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
-  $L_S(h) = $ $\dfrac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $
-
-  we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
