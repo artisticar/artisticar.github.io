@@ -1,5 +1,5 @@
 ---
-title: PAC Learnability in a nutshell
+title: PAC Learning in a nutshell
 date: 2020-02-11 22:53:23
 tags:
 - Machine Learning
@@ -11,11 +11,23 @@ share-img: /assets/img/watermelon.jpg
 
 
 
-# **Probably Approximately Correct**
+# **Probably Approximately Correct Learning**
+
+In the field of machine learning, several fundamental questions frequently come up
+
+- What problems are inherently hard to learn?
+- How do we define and measure learnability?
+- How to evaluate the generalization capabilities of algorithms?
+
+The PAC (Probably Approximately Correct) learning emerges as a framework that provides us a rigorous language and methodology to delve into these questions. In this article, we'll look at how PAC learning is formally defined.
+
+<br>
+
+---
 
 Notations:
 
-$H$ : Class of hypothesis
+$\mathcal H$ : Class of hypothesis
 
 $D$ : Distribution
 
@@ -27,19 +39,39 @@ $m$ : Sample size
 
 $L$ : Loss function
 
+$\mathcal X$ : Instances domain
+
+$\mathcal Y$ : Labels domain
+
 ---
 
 <br>
 
+Let's first start from a simple learning paradigm,
+
 **Empirical Risk Minimization(ERM)**:
 
-The principle behind ERM is to find a predictor $h$ that minimizes empirical the risk $L_S(h)$
+Given a training set $S$ sampled from an unknown distribution $D$, a learning algorithm outputs a predictor $h_S$ that minimizes the prediction error. 
+
+- $h_S: \mathcal X \rightarrow \mathcal Y$ 
+
+The principle behind ERM is to find a predictor $h$ that minimizes one type of error: the empirical risk (training error) $L_S(h)$, defined as
+
+- $L_S(h)$ $=$ $\dfrac{\vert\{\exists i \in [m]\}:h(x_i)\neq y_i\vert}{m} $
+
+$[m] = \{1, ..., m\}$
+
+Before learning, one often has an idea on what type of function the predictor should be, so we would apply ERM on this predetermined hypothesis class $\mathcal H$. Given a sample $S$, the output is formally defined as
+
+$ERM_\mathcal H(S) \in \underset{h\in \mathcal H}{argmin}~L_s(h)$
 
 <br>
 
-When the **realizability** assumption holds, the following conditions are met
+In the first part of this article, we assume the following assumption holds to make the problem easier. 
 
-- $\exists h_* \in H$ such that $L_{D,f}(h_*) = 0$
+ **The Realizability Assumption**:
+
+- $\exists h_* \in \mathcal H$ such that $L_{D,f}(h_*) = 0$
 - This implies that there exists a hypothesis that correctly predicts all the labels according to the distribution $D$
 
 *Corollary*: $P(L_S(h*) = 0) = 1$, for any $S$ sampled from $D$
@@ -48,7 +80,7 @@ Under this assumption, the predictor $h$ returned by ERM will always have an emp
 
 <br>
 
-Assuming the sample $S$ is sampled from the distribution $D$ following the i.i.d assumption.
+Since we only have access to $S$, we often further assume that the sample $S$ is sampled from the distribution $D$ following the i.i.d assumption.
 
 **i.i.d. assumption**:
 
@@ -76,17 +108,17 @@ We aim to upper-bound the probability of selecting a **misleading hypothesis**. 
 
 ### **Proof**
 
-We define $H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
+We define $\mathcal H_B$ as the set of hypothesis that has an error $>$ $\epsilon$ on the distribution $D$.
 
-- $H_B$ = {$h \in H : L_{(D,f)}(h) > \epsilon$}
+- $H_B$ = {$h \in \mathcal  : L_{(D,f)}(h) > \epsilon$}
 
 Therefore, the probability of getting a misleading hypothesis from the sample $S$ is 
 
-- $D^m$($\cup_{h\in H_B}${$S\vert_x: L_S(h) = 0$})
+- $D^m$($\cup_{h\in \mathcal H_B}${$S\vert_x: L_S(h) = 0$})
 
 Apply the union bound to this expression, we we find that the above probability is upperbounded by 
 
-- $\sum_{h\in H_B}$ $D^m$({$S\vert_x: L_S(h) = 0$})
+- $\sum_{h\in \mathcal H_B}$ $D^m$({$S\vert_x: L_S(h) = 0$})
 
 The probability of obtaining a single bad hypothesis $h$ is:
 
@@ -95,12 +127,12 @@ The probability of obtaining a single bad hypothesis $h$ is:
 
 Substituting this bound into the sum gives:
 
-- $\vert H_B\vert$ $e^{-\epsilon m}$
-- Since $\vert H_B\vert$ (the number of bad hypotheses) is not known, we upper-bound it by the total number of hypotheses, $\vert H\vert$.
+- $\vert \mathcal H_B\vert$ $e^{-\epsilon m}$
+- Since $\vert \mathcal H_B\vert$ (the number of bad hypotheses) is not known, we upper-bound it by the total number of hypotheses, $\vert \mathcal H\vert$.
 
 Putting all these observations together, we find that the upper-bound is:
 
-- $D^m$($\cup_{h\in H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert H\vert$ $e^{-\epsilon m}$
+- $D^m$($\cup_{h\in \mathcal H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert \mathcal H\vert$ $e^{-\epsilon m}$
 
 <br>
 
@@ -108,16 +140,16 @@ Putting all these observations together, we find that the upper-bound is:
 
 <br>
 
-In cases where $H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
+In cases where $\mathcal H$ is finite, we can establish a lowerbound on $m$ given the condifence parameter $\delta$ and accuracy parameter $\epsilon$. 
 
 If we aim to have at most $\delta $ odds of obtaining a misleading hypothesis — **i.e.** at least $1 - \delta $ confidence of getting a hypothesis that's approximately correct($L_{(D,f)}(h) < \epsilon$), we have
 
-- $1 - \vert H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which simplifies to
-- $m \geq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$
+- $1 - \vert \mathcal H\vert$ $e^{-\epsilon m}$ $>= 1 - \delta$ , which simplifies to
+- $m \geq \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$
 
 We define $m_H (\epsilon, delta)$ as **sample complexity**
 
-- $m_H (\epsilon, \delta) \leq \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
+- $m_H (\epsilon, \delta) \leq \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$ 
 
 This represents the minimum number of examples required for any ERM learned from an i.i.d sample to be:
 
@@ -133,13 +165,13 @@ This is the origin of the term **PAC**.
 
 <br>
 
-Suppose the realizability assumption holds for $H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$.
+Suppose the realizability assumption holds for $\mathcal H, D, f$, and $m >= m_H(\epsilon, \delta)$ i.i.d. examples are sampled from $D$.
 
-Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $H$ is PAC learnable. 
+Then, $\forall$ $\epsilon$ and $\delta$ , if a learning algorithm(**e.g.** ERM) return a hypothesis $h$ such that with confidence $1 - \delta$, its $L_{D,f}(h) < \epsilon$, we say that the hypothesis class $\mathcal H$ is PAC learnable. 
 
 *Corollary*: Every finite class hypothesis is PAC learnable with sample complexity
 
-- $m_H (\epsilon, \delta) <= \frac{log({\vert H\vert}/{\delta})}{\epsilon}$ 
+- $m_H (\epsilon, \delta) <= \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$ 
 
 It's important to note that this doesn't imply infinite hypothesis classes are unlearnable.  Some infinite classes, such as axis-aligned rectangles and concentric circles(often cited in learning theory exercises), are examples of PAC-learnable classes. 
 
@@ -153,7 +185,7 @@ It's important to note that this doesn't imply infinite hypothesis classes are u
 
 You know how some people claim they can determine if a watermelon is tasty based on its weight and diameter? While it's highly unlikely to find two identical watermelons, theoretically, you could have watermelons with the same weight and diameter that taste entirely different.
 
-I guess this is not a perfect example because of the subjectivity of 'tastiness'', but let's assume that there's a universal standard for it. In that case, if we know everything about the watermelon, everything about every single piece of physical matter it is composed of, then I guess there exist a hypothesis that can generate perfect prediction anytime. But let's be realistic; this is virtually impossible because the features we have are usually **not deterministic**.
+I guess this is not a perfect example because of the subjectivity of 'tastiness'', but let's assume that there's a universal standard for it. In that case, if we know everything about the watermelon, everything about every single piece of physical matter it is composed of, then there exists a hypothesis that can generate perfect predictions anytime. But let's be realistic; this is virtually impossible because the features we have are usually **not deterministic**.
 
 In such scenarios, no single hypothesis can provide a definitive correct answer. The best we can hope for is a hypothesis that gives a **probability distribution** based on those features.
 
@@ -167,11 +199,11 @@ We also want to introduce new definitions for empirical error and true error:
 
 **New Empirical Error:**
 
-- $L_S(h) = \frac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
+- $L_S(h) = \dfrac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
 
 - Compared to the original definition of empirical error 
 
-  $L_S(h) = $ $\frac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $
+  $L_S(h) = $ $\dfrac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $
 
   we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
