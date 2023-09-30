@@ -31,7 +31,7 @@ Given a training set $S$ sampled from an unknown distribution $D$, a learning al
 
 The principle behind ERM is to find a predictor $h$ that minimizes one type of error: the empirical risk (training error) $L_S(h)$, defined as
 
-- $L_S(h)$ $=$ $\dfrac{\vert\{\exists i \in [m]\}:h(x_i)\neq y_i\vert}{m} $, where $[m] = \{$ $1, ..., m$ $\}$
+- $L_S(h)$ $=$ $\dfrac{\vert\{\exists i \in [m]\}:h(x_i)\neq y_i\vert}{m}$, where $[m] =$ { $ 1, ..., m$  }
 
 Before learning, one often has an idea on what type of function the predictor should be, so we would apply ERM on this predetermined hypothesis class $\mathcal H$. Given a sample $S$, the output is formally defined as
 
@@ -147,8 +147,11 @@ We also want to introduce new definitions for empirical error and true error:
 
 - $L_S(h) = \dfrac{\vert \{i \vert h(x_i) \neq y_i)\}\vert}{m}$
 
-- Compared to the original definition of empirical error $L_S(h) = $ $\dfrac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $ , we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
+- Compared to the original definition of empirical error
 
+   $L_S(h) = $ $\dfrac{\vert \{i \vert h(x_i) \neq h_*(i)\}\rvert }{m} $ ,
+
+  we see that the $h_\ast(i)$ is replaced by $y_i$. This is because there's no longer an $h_*(i)$ that can make perfect predictions. 
 
 **New True Error:**
 
