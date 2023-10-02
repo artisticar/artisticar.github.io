@@ -1,6 +1,7 @@
 ---
-title: PAC Learning in a nutshell
+title: PAC Learning
 date: 2020-02-11 22:53:23
+subtitle: How to understand and assess learnability
 tags:
 - Machine Learning
 - Math
@@ -65,7 +66,7 @@ Similarly, even with a representative sample $S$, the sample may not capture the
 
 - $\epsilon$ , which denotes the error rate of the hypothesis in the true distribution $D$.
 
-<br>
+ 
 
 ### **Upper bound on $P(ERM_\mathcal H(S) \in \mathcal H_B)$**
 
@@ -91,6 +92,8 @@ Substituting this bound into the sum gives:
 Putting all these observations together, we find that the upper-bound is:
 
 - $D^m$($\cup_{h\in \mathcal H}${$S\vert_x: L_{(D,f)}(h) > \epsilon,$ $L_S(h) = 0$}) $\leq \vert \mathcal H\vert$ $e^{-\epsilon m}$
+
+ 
 
 ### **Lower bound on sample complexity**
 
@@ -216,7 +219,7 @@ Reference $\vert$ https://stackoverflow.com/questions/26275645/how-to-support-la
 
 **Side notes**
 
-First time writing in Latex,  so I figured I'd put together this blog to get the hang of it.
+This is my first time writing in Latex,  so I created this blog as a practice run.
 
 <br>
 
