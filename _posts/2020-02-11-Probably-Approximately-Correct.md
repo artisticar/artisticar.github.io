@@ -122,7 +122,7 @@ This is the origin of the term **PAC**.
 
 - $m_H (\epsilon, \delta) <= \dfrac{log({\vert \mathcal H\vert}/{\delta})}{\epsilon}$ 
 
-It's important to note that this doesn't imply infinite hypothesis classes are unlearnable.  Some infinite classes, such as axis-aligned rectangles and concentric circles(often cited in learning theory exercises), are examples of PAC-learnable classes. 
+It's important to note that this doesn't imply infinite hypothesis classes are unlearnable.  Some infinite classes, such as axis-aligned rectangles and concentric circles(often cited in learning theory exercises), are examples of PAC-learnable classes. The finiteness of another measure called the **VC-dimension** determines the PAC learnabiity of a class, and we'll take a look at this later in this article. 
 
 <br>
 
@@ -170,6 +170,36 @@ The definition mirrors that of standard PAC learnability but adds an extra term 
 - Our objective now shifts to getting as close as possible to the accuracy of the Bayes Optimal Predictor, rather than aiming for an unrealistic 0% error rate.
 
 So, the next time someone who claims to be a watermelon expert picks out a dud for you at Trader Joe's, it might not be because they're fibbing. They could very well be making the most informed choice possible but just got unlucky this time around. 
+
+<br>
+
+---
+
+<br>
+
+## **Uniform Convergence**
+
+**DEFINITION 3. ($\epsilon$ - representative sample)**       A
+
+
+
+**DEFINITION 4. (Uniform Convergence)**       A
+
+
+
+<br>
+
+---
+
+<br>
+
+## **VC-dimension**
+
+**THEOREM 1. (The fundamental Theorem of Statistical Learning)**        Let
+
+Then, **TFAE** (The following are equivalent):
+
+1. 
 
 <br>
 
